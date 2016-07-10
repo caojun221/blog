@@ -7,7 +7,7 @@ sudo dpkg-reconfigure -f noninteractive locales
 sudo /usr/sbin/update-locale LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
 source /etc/default/locale
 
-sudo cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+sudo cp -f /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 sudo sh -c 'echo "Asia/Seoul" > /etc/timezone'
 sudo dpkg-reconfigure -f noninteractive tzdata
 
