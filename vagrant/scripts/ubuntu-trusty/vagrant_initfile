@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -eu
+sudo apt-get update
+sudo locale-gen "en_US.UTF-8"
+sudo dpkg-reconfigure -f noninteractive locales
+sudo /usr/sbin/update-locale LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
+source /etc/default/locale
+
+sudo cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+sudo sh -c 'echo "Asia/Seoul" > /etc/timezone'
+sudo dpkg-reconfigure -f noninteractive tzdata
+
+# move settings                
+sudo mv -f /tmp/files/general/etc/initscript /etc/ && sudo chmod 644 /etc/initscript
+sudo mv -f /tmp/files/general/etc/sysctl.conf /etc/ && sudo chmod 644 /etc/sysctl.conf 
+sudo mv -f /tmp/files/general/etc/rsyslog.d/50-default.conf /etc/rsyslog.d/ && sudo chmod 644 /etc/rsyslog.d/50-default.conf
+sudo mv -f /tmp/files/general/etc/security/limits.conf /etc/security/ && sudo chmod 644 /etc/security/limits.conf
+sudo mv -f /tmp/files/general/etc/ssh/sshd_config /etc/ssh/ && sudo chmod 644 /etc/ssh/sshd_config
+
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server-5.6 mysql-client-5.6 mysql-client-core-5.6

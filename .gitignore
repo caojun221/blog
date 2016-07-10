@@ -16,3 +16,6 @@ blog.iml
 
 # Maven
 target/
+
+# Vagrant meta data
+.vagrant
