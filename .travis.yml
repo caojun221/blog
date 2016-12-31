@@ -24,4 +24,4 @@ deploy:
   on: *2
 before_deploy:
 - mkdir -p dpl_cd_upload
-- mv target/blog-1.0-SNAPSHOT.jar dpl_cd_upload/blogApp.jar
+- mv /home/travis/build/caojun221/blog/target/blog-1.0-SNAPSHOT.jar dpl_cd_upload/blogApp.jar
