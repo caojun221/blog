@@ -1,6 +1,6 @@
 language: java
 sudo: false
-script: mvn clean package
+script: mvn -DskipTests=true clean package
 deploy:
 - provider: s3
   access_key_id: AKIAIAX3APAE6YPVOZZA
