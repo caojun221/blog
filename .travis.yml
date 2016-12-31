@@ -17,11 +17,12 @@ deploy:
   access_key_id: AKIAIAX3APAE6YPVOZZA
   secret_access_key: *1
   bucket: caojun221
-  key: latest/blogApp.jar
-  bundle_type: jar
+  key: latest/blogApp.zip
+  bundle_type: zip
   application: blog
   deployment_group: blog-release
   on: *2
 before_deploy:
+- zip -r blogApp *
 - mkdir -p dpl_cd_upload
-- mv /home/travis/build/caojun221/blog/target/blog-1.0-SNAPSHOT.jar dpl_cd_upload/blogApp.jar
+- mv blogApp.zip dpl_cd_upload/blogApp.zip
