@@ -1,3 +1,27 @@
 language: java
 sudo: false
-script: mvn clean verify
+script: mvn clean package
+deploy:
+- provider: s3
+  access_key_id: AKIAIAX3APAE6YPVOZZA
+  secret_access_key: &1
+    secure: ZhJc8U538YbrHK8JSVEyVWZpWUJxtcoLAZ30nQqBL7bpad6Xjr/TlP/pukZL9I9gVnyOdR6tubCa57RIrhcbLxJBNlzsadrRkUeCHXMyMVgaC6MqKiuvzQW0Y/+kHhxGLigff3JDxaHXnLbvarsNnlw0AbZM51z0kJt38vQwE7rafuYcHPg5+6foyIOfCpl4+RgZnuSEng39NZp++5Yh1prer66URo723ipi0/UsVRXCWBDSB32pE22OOxzOafddoQmRG1RvbfMYTawddNKn2y1Y6dpBq2mDANR7v2x47kiPfeNHhYoTaSbGmycUPouSyLijVA/tq9bdrfDY1z5yN1uun/ytmkq50+sCVodmtxTouCGvOIEA6FZWng0kIplCNIPWWEea35pVXsyHpHMJMlppSFppiBnNMCkNv2RQmCkdUIl14s0CXnynay9K/Vb7ltEFRjfBCYzlHQ/0ujTv5PdUtXhQtbanLAJzJDKNDorTn3qlhyAqX/w4v4vPAhjAob1Ngfyfpn7EY+AR2I5GgiKrp/fOWPcqFH5OF7diJHyRJh67wDYyy5dKfpktXN9m3+f+bb/cgg3YjMSzuXaMlghgX65b3NM0twPZgRkbG2VtaDzMT5NsF37NFWTnGasyD4hhbL2jwUTQs8z9N00jDY8NTgLteqW6T1EEryi32fE=
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+    repo: caojun221/blog
+    branch: feature-devops
+  bucket: caojun221
+  upload_dir: latest
+- provider: codedeploy
+  access_key_id: AKIAIAX3APAE6YPVOZZA
+  secret_access_key: *1
+  bucket: caojun221
+  key: latest/blogApp.jar
+  bundle_type: jar
+  application: blog
+  deployment_group: blog-release
+  on: *2
+before_deploy:
+- mkdir -p dpl_cd_upload
+- mv target/blog-1.0-SNAPSHOT.jar dpl_cd_upload/blogApp.jar

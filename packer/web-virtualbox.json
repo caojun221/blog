@@ -1,0 +1,32 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Ubuntu_64",
+      "iso_url": "http://ftp.daumkakao.com/ubuntu-releases/trusty/ubuntu-14.04.4-server-amd64.iso",
+      "iso_checksum": "2ac1f3e0de626e54d05065d6f549fa3a",
+      "iso_checksum_type": "md5",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s", "disk_size": 20960,
+      "ssh_pty": true,
+      "headless": false
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/basic.sh",
+        "scripts/user.sh",
+        "scripts/mysql.sh",
+        "scripts/nginx.sh",
+        "scripts/java.sh"
+      ]
+    }
+  ],
+  "post-processors": [ "vagrant" ]
+}
